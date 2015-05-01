@@ -6,7 +6,7 @@ class VisualDefaultModule :
 public:
 	VisualDefaultModule();
 	virtual ~VisualDefaultModule();
-    void draw(Graphics &g, CRect &rect);
+    void Draw(Graphics &g, CRect &rect);
     void OnShow();
 };
 

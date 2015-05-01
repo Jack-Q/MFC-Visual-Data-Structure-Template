@@ -1,17 +1,3 @@
-// 这段 MFC 示例源代码演示如何使用 MFC Microsoft Office Fluent 用户界面 
-// (“Fluent UI”)。该示例仅供参考，
-// 用以补充《Microsoft 基础类参考》和 
-// MFC C++ 库软件随附的相关电子文档。  
-// 复制、使用或分发 Fluent UI 的许可条款是单独提供的。  
-// 若要了解有关 Fluent UI 许可计划的详细信息，请访问  
-// http://go.microsoft.com/fwlink/?LinkId=238214。
-//
-// 版权所有(C) Microsoft Corporation
-// 保留所有权利。
-
-// MainFrm.cpp : CMainFrame 类的实现
-//
-
 #include "stdafx.h"
 #include "01-DataStructureTemplete.h"
 #include "MainFrm.h"
@@ -37,6 +23,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
     ON_COMMAND(ID_LIST_ADD_DATA, &CMainFrame::OnListAddData)
     ON_COMMAND(ID_LIST_DELETE_ALL, &CMainFrame::OnListDeleteAll)
     ON_COMMAND(ID_LIST_EDIT, &CMainFrame::OnListEdit)
+    ON_COMMAND(ID_LIST_CLOSE, &CMainFrame::OnListClose)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -218,6 +205,17 @@ void CMainFrame::OnGalleryDataStructure() {
     m_wndRibbonBar.RecalcLayout();
 }
 
+void CMainFrame::OnSetDefaultModule() {
+    // 关闭数据结构模块，重新显示欢迎页面
+    // 默认页面的id为-1
+    if (OnDataStructureChange(-1)) {
+        m_selectedDataType = m_gallery->GetSelectedItem();
+        m_selectedDataType = -1;
+        m_gallery->SelectItem(-1);
+        m_wndRibbonBar.RecalcLayout();
+    }
+    
+}
 
 void CMainFrame::OnUpdateGalleryDataStructure(CCmdUI *pCmdUI) {
 }
@@ -282,6 +280,7 @@ BOOL CMainFrame::OnDataStructureChange(int p_iItemToChange) {
 }
 
 
+
 //////////////////////////////////////////////////////////////////////////
 // 链表选项卡事件处理
 
@@ -311,6 +310,13 @@ void CMainFrame::OnListDeleteAll() {
 void CMainFrame::OnListEdit() {
     AfxMessageBox(_T("Edit Item"));
 }
+
+// 关闭链表模式
+void CMainFrame::OnListClose() {
+    OnSetDefaultModule();
+}
+
+
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
@@ -322,6 +328,3 @@ void CMainFrame::OnListEdit() {
 // 堆栈选项卡时间处理
 
 //////////////////////////////////////////////////////////////////////////
-
-
-

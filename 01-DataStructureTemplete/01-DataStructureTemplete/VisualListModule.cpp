@@ -3,15 +3,21 @@
 #include "01-DataStructureTemplete.h"
 
 
-VisualListModule::VisualListModule() {
+VisualListModule::VisualListModule()
+    :m_bmpBackground(400, 300),
+    m_bmpNodeBase(150, 50)
+{
+    m_listSize = 0;
+    m_listHead.SetNext(&m_listTail);
+    m_listTail.SetPrev(&m_listHead);
 }
 
 
 VisualListModule::~VisualListModule() {
 }
 
-void VisualListModule::draw(Graphics &g, CRect &rect) {
-    g.DrawString(_T("链表"), 2, &Gdiplus::Font(_T("Microsoft Yahei UI"), 20), PointF(50.0, 50.0), &SolidBrush(Color(0, 50, 220)));
+void VisualListModule::Draw(Graphics &g, CRect &rect) {
+    DrawBackground(g, rect);
 }
 
 
@@ -40,4 +46,21 @@ void /*CChildView::*/drawNode(Graphics &g, INT top, INT left) {
     //Content Text
     g.DrawString(_T("首元素"), 3, &Gdiplus::Font(_T("Microsoft Yahei"), 12), PointF(left + 25.0, top + 8.0), &SolidBrush(Color(20, 50, 80)));
 
+}
+
+// 获取当前链表的节点数量
+INT_PTR VisualListModule::GetSize() {
+    return m_listSize;
+}
+
+// 通过下表操作符获取指定的节点
+VisualListNodeBase & VisualListModule::operator[](INT_PTR index) {
+    return m_listHead;
+}
+
+
+void VisualListModule::DrawBackground(Graphics & g, CRect &rect) {
+    g.Clear(Color(240, 245, 250));
+    g.DrawString(_T("链表"), 2, &Gdiplus::Font(_T("Microsoft Yahei UI"), 30), PointF(20.0, 10.0), &SolidBrush(Color(0, 50, 220)));
+    g.DrawLine(&Pen(&LinearGradientBrush(Point(0, 0), Point(400, 0), Color(255, 50, 130, 220), Color(0, 30, 220, 200)), 4.0F), Point(0, 75), Point(400, 75));
 }

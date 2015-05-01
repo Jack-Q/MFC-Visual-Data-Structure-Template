@@ -61,11 +61,8 @@
 #define ID_GALLERY_ITEM_QUEUE           32776
 #define ID_GALLERY_ITEM_LINK_LIST       32777
 #define ID_GALLERY_STACK                32778
-#define ID_BUTTON6                      32779
 #define ID_LIST_DELETE_ALL              32779
 #define ID_PNG1                         32781
-#define ID_BUTTON2                      32782
-#define ID_EDIT                         32782
 #define ID_LIST_EDIT                    32782
 #define ID_EDIT2                        32784
 #define ID_COMBO2                       32785
@@ -76,14 +73,15 @@
 #define ID_QUEUE_ADD                    32792
 #define ID_QUEUE_DELETE_ALL             32794
 #define ID_QUEUE_ADD_DATA               32796
-#define ID_EDIT4                        32797
+#define ID_LIST_CLOSE                   32798
+#define ID_BUTTON2                      32799
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        320
-#define _APS_NEXT_COMMAND_VALUE         32798
+#define _APS_NEXT_COMMAND_VALUE         32800
 #define _APS_NEXT_CONTROL_VALUE         1004
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

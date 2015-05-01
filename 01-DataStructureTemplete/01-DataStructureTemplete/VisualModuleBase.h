@@ -4,7 +4,7 @@ public:
     VisualModuleBase();
     virtual ~VisualModuleBase();
     //Draw the view
-    virtual void draw(Graphics &g, CRect &rect) = 0;
+    virtual void Draw(Graphics &g, CRect &rect) = 0;
 protected:
     CAnimationController m_AnimationController;
 public:

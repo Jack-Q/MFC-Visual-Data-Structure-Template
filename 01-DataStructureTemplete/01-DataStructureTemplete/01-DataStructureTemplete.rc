@@ -435,11 +435,13 @@ BEGIN
     ID_QUEUE_ADD            "将设置的数据添加到队列中"
     ID_QUEUE_DELETE_ALL     "删除队列中的全部节点"
     ID_QUEUE_ADD_DATA       "输入将要插入的数据"
+    ID_LIST_CLOSE           "关闭链表模式"
 END
 
 STRINGTABLE
 BEGIN
     ID_LIST_DELETE_ALL      "删除链表中的所有节点"
+    ID_LIST_EDIT            "编辑链表数据"
 END
 
 #endif    // 中文(简体，中国) resources

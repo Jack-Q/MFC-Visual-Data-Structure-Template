@@ -82,6 +82,8 @@ public:
     afx_msg void OnListAddData();
     afx_msg void OnListDeleteAll();
     afx_msg void OnListEdit();
+    void OnSetDefaultModule();
+    afx_msg void OnListClose();
 };
 
 

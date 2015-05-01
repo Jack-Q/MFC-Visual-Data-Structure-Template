@@ -57,11 +57,14 @@ void CChildView::OnPaint() {
 
 	CPaintDC dc(this); // 用于绘制的设备上下文
 	Graphics g(dc);         // Get GDI+ Interface
+    g.SetCompositingQuality(CompositingQualityGammaCorrected);
+    g.SetSmoothingMode(SmoothingModeHighQuality);
+    g.SetTextRenderingHint(TextRenderingHintAntiAlias);
     //获取窗口
     CRect rect;
     GetClientRect(&rect);
     //传递绘图接口和视窗大小至当前的模块进行界面UI的绘制
-    m_mainFrame->m_selectedModule->draw(g,rect);
+    m_mainFrame->m_selectedModule->Draw(g,rect);
 }
 
 
