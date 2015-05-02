@@ -3,7 +3,8 @@
 
 
 VisualListArrow::VisualListArrow(const Color &color)
-    :m_color(color){
+    :m_color(color), m_brush(m_color) ,m_pen(&m_brush,3.0F)
+{
     
 }
 
@@ -11,7 +12,8 @@ VisualListArrow::~VisualListArrow() {
 }
 
 void VisualListArrow::draw(Graphics &g) {
-
+    //TODO Draw Curve
+    //g.DrawCurve(m_pen, m_points.GetData(), m_points.GetSize());
 }
 
 inline INT_PTR VisualListArrow::AddPoint(const Point point) {

@@ -3,6 +3,8 @@
 
 
 VisualListNodeBase::VisualListNodeBase() {
+    m_nodeNext = NULL;
+    m_nodePrev = NULL;
 }
 
 
@@ -23,12 +25,12 @@ VisualListNodeBase * VisualListNodeBase::GetNext() {
 
 // 检查之前是否还有节点
 BOOL VisualListNodeBase::HasPrev() {
-    return FALSE;
+    return BOOL(m_nodePrev);
 }
 
 // 检查之后是否还有节点
 BOOL VisualListNodeBase::HasNext() {
-    return FALSE;
+    return BOOL(m_nodeNext);
 }
 
 // 更新指向前一节点的指针

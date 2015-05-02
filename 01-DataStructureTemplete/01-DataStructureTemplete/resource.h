@@ -51,8 +51,12 @@
 #define IDB_WELCOME_BACKGROUND          317
 #define IDI_ICON1                       318
 #define IDB_PNG3                        319
+#define IDR_LIST_NODE_CONTEXT           320
+#define IDD_LIST_NODE_EDIT              321
 #define IDC_INFORMATION_LIST            1002
 #define IDC_APPLICATION_TITLE           1003
+#define IDC_EDIT1                       1004
+#define IDC_EDIT                        1004
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_QUEUE_CONTEXT                32771
 #define ID_LINK_LIST_CONTEXT            32772
@@ -74,15 +78,17 @@
 #define ID_QUEUE_DELETE_ALL             32794
 #define ID_QUEUE_ADD_DATA               32796
 #define ID_LIST_CLOSE                   32798
-#define ID_BUTTON2                      32799
+#define ID_Menu                         32800
+#define ID_LIST_NODE_DELETE             32805
+#define ID_LIST_NODE_EDITVALUE          32806
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        320
-#define _APS_NEXT_COMMAND_VALUE         32800
-#define _APS_NEXT_CONTROL_VALUE         1004
+#define _APS_NEXT_RESOURCE_VALUE        322
+#define _APS_NEXT_COMMAND_VALUE         32807
+#define _APS_NEXT_CONTROL_VALUE         1005
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

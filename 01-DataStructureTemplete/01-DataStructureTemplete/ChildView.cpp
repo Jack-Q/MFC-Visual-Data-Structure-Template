@@ -26,6 +26,8 @@
 
 CChildView::CChildView(CMainFrame *mainFrame) {
     m_mainFrame = mainFrame;
+    m_AnimationController.EnableAnimationTimerEventHandler();
+    m_AnimationController.EnablePriorityComparisonHandler(UI_ANIMATION_PHT_TRIM);
 }
 
 CChildView::~CChildView() {
@@ -34,6 +36,8 @@ CChildView::~CChildView() {
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
+    ON_WM_ERASEBKGND()
+    ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 
@@ -49,6 +53,9 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs) {
 	cs.style &= ~WS_BORDER;
 	cs.lpszClass = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS,
 		::LoadCursor(NULL, IDC_ARROW), reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1), NULL);
+
+    // 设置动画管理器相关窗口
+    m_AnimationController.SetRelatedWnd(this);
 
 	return TRUE;
 }
@@ -68,3 +75,14 @@ void CChildView::OnPaint() {
 }
 
 
+
+
+BOOL CChildView::OnEraseBkgnd(CDC* pDC) {
+    return TRUE /* CWnd::OnEraseBkgnd(pDC) */;
+}
+
+
+void CChildView::OnContextMenu(CWnd* pWnd, CPoint point) {
+
+    m_mainFrame->m_selectedModule->OnContextMenu(pWnd,point);
+}

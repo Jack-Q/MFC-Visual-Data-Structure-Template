@@ -18,6 +18,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
     ON_COMMAND(ID_TOOLS_OPTIONS, &CMainFrame::OnOptions)
     ON_COMMAND(ID_GALLERY_DATA_STRUCTURE, &CMainFrame::OnGalleryDataStructure)
     ON_UPDATE_COMMAND_UI(ID_GALLERY_DATA_STRUCTURE, &CMainFrame::OnUpdateGalleryDataStructure)
+    // 链表选项卡操作绑定
     ON_COMMAND(ID_LIST_ADD, &CMainFrame::OnListAdd)
     ON_COMMAND(ID_LIST_ADD_POSITION, &CMainFrame::OnListAddPosition)
     ON_COMMAND(ID_LIST_ADD_DATA, &CMainFrame::OnListAddData)
@@ -28,11 +29,10 @@ END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
 
-CMainFrame::CMainFrame() 
-    : m_mdlDefaultModule(NULL), 
+CMainFrame::CMainFrame()
+    : m_mdlDefaultModule(NULL),
     m_mdlListModule(NULL),
-    m_wndView(this)
-{
+    m_wndView(this) {
     theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_WINDOWS_7);
     //默认不选择数据结构
     m_selectedDataType = -1;
@@ -214,7 +214,7 @@ void CMainFrame::OnSetDefaultModule() {
         m_gallery->SelectItem(-1);
         m_wndRibbonBar.RecalcLayout();
     }
-    
+
 }
 
 void CMainFrame::OnUpdateGalleryDataStructure(CCmdUI *pCmdUI) {
@@ -286,29 +286,58 @@ BOOL CMainFrame::OnDataStructureChange(int p_iItemToChange) {
 
 // 设置将要插入链表数据的位置输入框
 void CMainFrame::OnListAddPosition() {
-    CMFCRibbonEdit *edit = (CMFCRibbonEdit *) m_wndRibbonBar.FindByID(ID_LIST_ADD_POSITION);
-    AfxMessageBox(edit->GetEditText() + _T(" Entered "));
+    // CMFCRibbonEdit *edit = (CMFCRibbonEdit *) m_wndRibbonBar.FindByID(ID_LIST_ADD_POSITION);
+    // AfxMessageBox(edit->GetEditText() + _T(" Entered "));
 }
 
 // 设置将插入链表数据输入框
 void CMainFrame::OnListAddData() {
-    CMFCRibbonEdit *edit = (CMFCRibbonEdit *) m_wndRibbonBar.FindByID(ID_LIST_ADD_DATA);
-    AfxMessageBox(edit->GetEditText() + _T(" Entered "));
+    // CMFCRibbonEdit *edit = (CMFCRibbonEdit *) m_wndRibbonBar.FindByID(ID_LIST_ADD_DATA);
+    // AfxMessageBox(edit->GetEditText() + _T(" Entered "));
 }
 
 // 添加数据按钮
 void CMainFrame::OnListAdd() {
-    AfxMessageBox(_T("List Add Item"));
+    CMFCRibbonEdit *editPosition = (CMFCRibbonEdit *) m_wndRibbonBar.FindByID(ID_LIST_ADD_POSITION);
+    CMFCRibbonEdit *editData = (CMFCRibbonEdit *) m_wndRibbonBar.FindByID(ID_LIST_ADD_DATA);
+
+    INT_PTR position = _ttoi(editPosition->GetEditText());
+    CString data = editData->GetEditText();
+
+    INT_PTR size = m_mdlListModule->GetSize();
+    if (position >= 0 && position <= size) {
+        if (m_mdlListModule->InsertNode(position, data) != -1) {
+            AfxMessageBox(_T("节点插入成功"),MB_ICONINFORMATION);
+            Invalidate();
+        }
+        else {
+            AfxMessageBox(_T("节点插入失败"),MB_ICONSTOP);
+        }
+    }
+    else {
+        if (size) {
+            CString prompt;
+            prompt.Format(_T("无法在指定的位置插入节点，当前链表中有%d个元素，节点位置的取值应为0-%d"), size, size);
+            AfxMessageBox(prompt);
+        }
+        else {
+            AfxMessageBox(_T("当前链表中没有元素，节点位置的取值只能为0。"));
+            editPosition->SetEditText(_T("0"));
+        }
+    }
+
 }
 
 // 删除全部数据按钮
 void CMainFrame::OnListDeleteAll() {
-    AfxMessageBox(_T("Delete All Items"));
+    m_mdlListModule->DeleteAll();
+    Invalidate();
 }
 
 // 编辑数据按钮
 void CMainFrame::OnListEdit() {
     AfxMessageBox(_T("Edit Item"));
+    Invalidate();
 }
 
 // 关闭链表模式

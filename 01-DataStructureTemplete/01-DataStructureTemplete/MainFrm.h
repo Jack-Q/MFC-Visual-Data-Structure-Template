@@ -65,7 +65,6 @@ protected:
 public:
     afx_msg void OnGalleryDataStructure();
     afx_msg void OnUpdateGalleryDataStructure(CCmdUI *pCmdUI);
-    afx_msg void OnListAdd();
 
 
 private:
@@ -77,12 +76,13 @@ public:
 	VisualDefaultModule *m_mdlDefaultModule;
     VisualListModule *m_mdlListModule;
 
+    void OnSetDefaultModule();
 
     afx_msg void OnListAddPosition();
     afx_msg void OnListAddData();
+    afx_msg void OnListAdd();
     afx_msg void OnListDeleteAll();
     afx_msg void OnListEdit();
-    void OnSetDefaultModule();
     afx_msg void OnListClose();
 };
 
