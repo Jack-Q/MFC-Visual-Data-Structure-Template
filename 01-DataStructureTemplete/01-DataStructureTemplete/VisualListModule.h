@@ -52,7 +52,9 @@ private:
     void DrawNodes(Graphics & g, CRect &rect);
     GraphicsPath *GetDrawArrow(Point pt, BOOL direction, GraphicsPath *arr);
     Point GetNodePosition(INT_PTR index);
-
+    BOOL IsNodeReversed(INT_PTR index) {
+        
+    }
     // »æÍ¼¼ì²â
     INT_PTR CheckPointOnID(Point point);
 public:

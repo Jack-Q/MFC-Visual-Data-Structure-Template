@@ -36,23 +36,35 @@ public:
     virtual void draw(Graphics & g, INT left, INT top, INT index, Gdiplus::Font  & fntNodeTitle, Gdiplus::Font &  fntNodeContent) = 0;
 
     // 获取指针位点
-    virtual Point GetPointFromPrev(Point original) {
+    virtual Point GetPointFromPrev(Point original, BOOL reversed = FALSE) {
+        if (reversed) {
+            return GetPointToPrev(original);
+        }
         original.X += DW_NODE_WIDTH * 0.1F;
         original.Y += DW_NODE_HEIGHT* 0.95F;
         return original;
     }
-    virtual Point GetPointToPrev(Point original) {
+    virtual Point GetPointToPrev(Point original , BOOL reversed = FALSE) {
+        if (reversed) {
+            return GetPointFromPrev(original);
+        }
         original.X += DW_NODE_WIDTH * 0.9F;
         original.Y += DW_NODE_HEIGHT * 0.1F;
         return original;
     }
-    virtual Point GetPointFromNext(Point original) {
+    virtual Point GetPointFromNext(Point original, BOOL reversed = FALSE) {
+        if (reversed) {
+            return GetPointToNext(original);
+        }
         original.X += DW_NODE_WIDTH * 0.05F;
         original.Y += DW_NODE_HEIGHT* 0.05F;
         return original;
     }
 
-    virtual Point GetPointToNext(Point original) {
+    virtual Point GetPointToNext(Point original, BOOL reversed = FALSE) {
+        if (reversed) {
+            return GetPointFromNext(original);
+        }
         original.X += DW_NODE_WIDTH * 0.9F;
         original.Y += DW_NODE_HEIGHT* 0.95F;
         return original;

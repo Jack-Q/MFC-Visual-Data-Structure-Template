@@ -357,9 +357,6 @@ void VisualListModule::DrawNodes(Graphics & g, CRect &rect) {
         }
 
     } while (node->HasNext());
-
-    // 绘制终止节点
-    // node->draw(g, DW_NODE_HEIGHT + 200, DW_NODE_WIDTH*1.1*i, 0, m_fntNodeTitle, m_fntNodeContent);
 }
 
 GraphicsPath * VisualListModule::GetDrawArrow(Point pt, BOOL direction, GraphicsPath *arr) {
@@ -400,30 +397,7 @@ GraphicsPath * VisualListModule::GetDrawArrow(Point pt, BOOL direction, Graphics
 
 Point VisualListModule::GetNodePosition(INT_PTR index) {
     // index 的取值应为-1至listsize，其中-1位起始节点
-    // listSize为终止节点
-    if (FALSE) {
-        // No reverse
-        INT_PTR count = m_listSize + 2;
-        INT countPerLine =
-            (m_iDrawWidth + 2 * DW_PRIMARY_MARGIN - 2 * DW_PRIMARY_PADDING)
-            / (DW_NODE_WIDTH + 2 * DW_PRIMARY_MARGIN);
-        INT lines = (count + countPerLine - 1) / countPerLine; // 向上取整
-        INT cliX = (m_iDrawWidth - countPerLine * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2)
-            + 2 * DW_PRIMARY_MARGIN) / 2;
-        INT cliY = DW_TITLE_HEIGHT + (m_iDrawHeight - DW_TITLE_HEIGHT
-            - lines * (DW_NODE_HEIGHT + DW_PRIMARY_MARGIN * 2)
-            + 2 * DW_PRIMARY_MARGIN) / 2;
-        index += 1;
-        INT lc = count % countPerLine;
-        if (index + lc >= count) {
-            cliX = (m_iDrawWidth - lc * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2)
-                + 2 * DW_PRIMARY_MARGIN) / 2;
-        }
-
-        return Point(cliX + (index % countPerLine) * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2),
-            cliY + (index / countPerLine) * (DW_NODE_HEIGHT + DW_PRIMARY_MARGIN * 2));
-    }
-
+    // listSize为终止节点 
     INT_PTR count = m_listSize + 2;
     INT countPerLine =
         (m_iDrawWidth + 2 * DW_PRIMARY_MARGIN - 2 * DW_PRIMARY_PADDING)
@@ -440,21 +414,29 @@ Point VisualListModule::GetNodePosition(INT_PTR index) {
         cliX = (m_iDrawWidth - lc * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2)
             + 2 * DW_PRIMARY_MARGIN) / 2;
     }
-    if (index / countPerLine % 2) {
-        //Reverse
-        if (index + lc >= count) {
+    if (m_linked) {
+        if (index / countPerLine % 2) {
+            //Reverse
+            if (index + lc >= count) {
 
-            return Point(cliX + (lc - 1 - index % countPerLine) * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2),
+                return Point(cliX + (lc - 1 - index % countPerLine) * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2),
+                    cliY + (index / countPerLine) * (DW_NODE_HEIGHT + DW_PRIMARY_MARGIN * 2));
+            }
+            return Point(cliX + (countPerLine - 1 - index % countPerLine) * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2),
                 cliY + (index / countPerLine) * (DW_NODE_HEIGHT + DW_PRIMARY_MARGIN * 2));
         }
-        return Point(cliX + (countPerLine - 1 - index % countPerLine) * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2),
-            cliY + (index / countPerLine) * (DW_NODE_HEIGHT + DW_PRIMARY_MARGIN * 2));
+        else {
+            return Point(cliX + (index % countPerLine) * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2),
+                cliY + (index / countPerLine) * (DW_NODE_HEIGHT + DW_PRIMARY_MARGIN * 2));
+
+        }
     }
     else {
+        // No reverse
         return Point(cliX + (index % countPerLine) * (DW_NODE_WIDTH + DW_PRIMARY_MARGIN * 2),
             cliY + (index / countPerLine) * (DW_NODE_HEIGHT + DW_PRIMARY_MARGIN * 2));
-
     }
+
 }
 
 INT_PTR VisualListModule::CheckPointOnID(Point point) {

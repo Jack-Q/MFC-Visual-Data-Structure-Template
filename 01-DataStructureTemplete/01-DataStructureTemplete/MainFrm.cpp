@@ -351,11 +351,11 @@ void CMainFrame::OnListClose() {
 // 改变链表排列方式
 void CMainFrame::OnListLinked() {
     m_mdlListModule->SetLinked(!m_mdlListModule->IsLinked());
+    m_wndRibbonBar.GetParent()->Invalidate();
 }
 
 void CMainFrame::OnUpdateListLinked(CCmdUI *pCmdUI) {
     pCmdUI->SetCheck(m_mdlListModule->IsLinked());
-    RecalcLayout(TRUE);
 }
 
 //////////////////////////////////////////////////////////////////////////
