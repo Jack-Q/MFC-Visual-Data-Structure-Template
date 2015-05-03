@@ -84,6 +84,8 @@ public:
     afx_msg void OnListDeleteAll();
     afx_msg void OnListEdit();
     afx_msg void OnListClose();
+    afx_msg void OnListLinked();
+    afx_msg void OnUpdateListLinked(CCmdUI *pCmdUI);
 };
 
 

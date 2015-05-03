@@ -63,6 +63,9 @@
     <ClInclude Include="VisualDefaultModule.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="VisualListNodeEditor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01-DataStructureTemplete.cpp">
@@ -99,6 +102,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="VisualDefaultModule.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualListNodeEditor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

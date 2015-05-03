@@ -29,5 +29,6 @@ protected:
 public:
     afx_msg BOOL OnEraseBkgnd(CDC* pDC);
     afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+    afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 };
 

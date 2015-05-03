@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
     ON_WM_ERASEBKGND()
     ON_WM_CONTEXTMENU()
+    ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 
@@ -83,6 +84,12 @@ BOOL CChildView::OnEraseBkgnd(CDC* pDC) {
 
 
 void CChildView::OnContextMenu(CWnd* pWnd, CPoint point) {
-
     m_mainFrame->m_selectedModule->OnContextMenu(pWnd,point);
+}
+
+
+void CChildView::OnLButtonDblClk(UINT nFlags, CPoint point) {
+    // TODO:  在此添加消息处理程序代码和/或调用默认值
+    m_mainFrame->m_selectedModule->OnLButtonDblClk(this, point);
+    CWnd::OnLButtonDblClk(nFlags, point);
 }

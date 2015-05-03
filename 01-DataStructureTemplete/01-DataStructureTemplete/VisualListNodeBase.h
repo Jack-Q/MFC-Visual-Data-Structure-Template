@@ -33,7 +33,7 @@ public:
     VisualListNodeBase *SetNext(VisualListNodeBase *next);
 
     // 执行绘图操作
-    virtual void draw(Graphics & g, INT top, INT left, INT index, Gdiplus::Font  & fntNodeTitle, Gdiplus::Font &  fntNodeContent) = 0;
+    virtual void draw(Graphics & g, INT left, INT top, INT index, Gdiplus::Font  & fntNodeTitle, Gdiplus::Font &  fntNodeContent) = 0;
 
     // 获取指针位点
     virtual Point GetPointFromPrev(Point original) {

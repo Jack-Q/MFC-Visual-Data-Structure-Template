@@ -9,7 +9,7 @@ VisualListNode::VisualListNode() :m_strContent(_T("")) {
 VisualListNode::~VisualListNode() {
 }
 
-void VisualListNode::draw(Graphics & g, INT top, INT left, INT index, Gdiplus::Font &  fntNodeTitle, Gdiplus::Font & fntNodeContent) {
+void VisualListNode::draw(Graphics & g, INT left, INT top, INT index, Gdiplus::Font &  fntNodeTitle, Gdiplus::Font & fntNodeContent) {
     //Outer box
     Rect nodebox(left + 5, top + 5, DW_NODE_WIDTH - 10, DW_NODE_HEIGHT - 10);
     LinearGradientBrush linearBrush(nodebox, Color(50, 160, 160, 160), Color(80, 160, 160, 160), 45);
@@ -25,12 +25,29 @@ void VisualListNode::draw(Graphics & g, INT top, INT left, INT index, Gdiplus::F
     g.FillEllipse(&SolidBrush(Color(220, 190, 70)), left + 2, top + 2, 30, 30);
 
     //Index Text
-    CString strIndex;
-    strIndex.Format(_T("%d"), index);
-    g.DrawString(strIndex, strIndex.GetLength(), &fntNodeTitle, PointF(left + 17.0 - strIndex.GetLength() * 9, top + 4.0), &SolidBrush(Color(20, 50, 80)));
+    CString str;
+    str.Format(_T("%d"), index);
+    g.DrawString(str, str.GetLength(), &fntNodeTitle, PointF(left + 17.0 - str.GetLength() * 9, top + 4.0), &SolidBrush(Color(20, 50, 80)));
 
     //Content Text
-    g.DrawString(m_strContent, m_strContent.GetLength(), &fntNodeContent, PointF(left + 30.0, top + 13.0), &SolidBrush(Color(20, 50, 80)));
+    // 获取可容纳的最长的字符串
+   INT len = 6; PointF p; RectF r;
+    if (m_strContent.GetLength() <= 7) {
+        str = m_strContent;
+    }
+    else {
+        do {
+            g.MeasureString(m_strContent, len++, &fntNodeContent, p, &r);
+        } while (len < m_strContent.GetLength() && r.Width < DW_NODE_WIDTH - 85);
+        if (len < m_strContent.GetLength()) {
+            str.Format(_T("%s..."), m_strContent.Mid(0, len));
+        }
+        else {
+            str = m_strContent;
+        }
+    }
+    g.MeasureString(str, str.GetLength(), &fntNodeContent, p, &r);
+    g.DrawString(str, str.GetLength(), &fntNodeContent, PointF(left + 105.0 - r.Width / 2, top + 23.0), &SolidBrush(Color(20, 50, 80)));
 }
 
 void VisualListNode::SetContent(CString content) {

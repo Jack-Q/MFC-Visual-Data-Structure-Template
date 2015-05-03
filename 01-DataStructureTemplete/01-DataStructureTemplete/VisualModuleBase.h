@@ -12,5 +12,7 @@ public:
     virtual void OnShow() = 0;
     virtual void OnContextMenu(CWnd* pWnd, CPoint point) {
     }
+    virtual void OnLButtonDblClk(CWnd* pWnd, CPoint point) {
+    }
 };
 

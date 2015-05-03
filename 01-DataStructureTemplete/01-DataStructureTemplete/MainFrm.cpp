@@ -25,6 +25,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
     ON_COMMAND(ID_LIST_DELETE_ALL, &CMainFrame::OnListDeleteAll)
     ON_COMMAND(ID_LIST_EDIT, &CMainFrame::OnListEdit)
     ON_COMMAND(ID_LIST_CLOSE, &CMainFrame::OnListClose)
+    ON_COMMAND(ID_LIST_LINKED, &CMainFrame::OnListLinked)
+    ON_UPDATE_COMMAND_UI(ID_LIST_LINKED, &CMainFrame::OnUpdateListLinked)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -307,11 +309,11 @@ void CMainFrame::OnListAdd() {
     INT_PTR size = m_mdlListModule->GetSize();
     if (position >= 0 && position <= size) {
         if (m_mdlListModule->InsertNode(position, data) != -1) {
-            AfxMessageBox(_T("节点插入成功"),MB_ICONINFORMATION);
+            AfxMessageBox(_T("节点插入成功"), MB_ICONINFORMATION);
             Invalidate();
         }
         else {
-            AfxMessageBox(_T("节点插入失败"),MB_ICONSTOP);
+            AfxMessageBox(_T("节点插入失败"), MB_ICONSTOP);
         }
     }
     else {
@@ -336,8 +338,9 @@ void CMainFrame::OnListDeleteAll() {
 
 // 编辑数据按钮
 void CMainFrame::OnListEdit() {
-    AfxMessageBox(_T("Edit Item"));
-    Invalidate();
+    if (AfxMessageBox(_T("Edit Item")) != IDCANCEL) {
+        Invalidate();
+    }
 }
 
 // 关闭链表模式
@@ -345,6 +348,15 @@ void CMainFrame::OnListClose() {
     OnSetDefaultModule();
 }
 
+// 改变链表排列方式
+void CMainFrame::OnListLinked() {
+    m_mdlListModule->SetLinked(!m_mdlListModule->IsLinked());
+}
+
+void CMainFrame::OnUpdateListLinked(CCmdUI *pCmdUI) {
+    pCmdUI->SetCheck(m_mdlListModule->IsLinked());
+    RecalcLayout(TRUE);
+}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -357,3 +369,7 @@ void CMainFrame::OnListClose() {
 // 堆栈选项卡时间处理
 
 //////////////////////////////////////////////////////////////////////////
+
+
+
+
