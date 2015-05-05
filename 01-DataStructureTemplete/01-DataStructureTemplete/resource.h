@@ -67,11 +67,8 @@
 #define ID_GALLERY_STACK                32778
 #define ID_LIST_DELETE_ALL              32779
 #define ID_PNG1                         32781
-#define ID_LIST_EDIT                    32782
 #define ID_EDIT2                        32784
-#define ID_COMBO2                       32785
 #define ID_LIST_ADD_DATA                32785
-#define ID_LIST_INDEX                   32785
 #define ID_SPIN1                        32789
 #define ID_LIST_ADD_POSITION            32790
 #define ID_LIST_ADD                     32791
@@ -84,7 +81,8 @@
 #define ID_LIST_NODE_EDITVALUE          32806
 #define ID_LIST_DOUBLE                  32809
 #define ID_LIST_LINKED                  32811
-
+#define ID_LIST_EDIT                    32813
+#define ID_LIST_INDEX                   32815
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED

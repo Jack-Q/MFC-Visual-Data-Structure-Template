@@ -19,19 +19,24 @@ void VisualListNode::draw(Graphics & g, INT left, INT top, INT index, Gdiplus::F
     Rect innerbox(left + 10, top + 10, DW_NODE_WIDTH - 20, DW_NODE_HEIGHT - 20);
     LinearGradientBrush innerLinearBrush(innerbox, Color(60, 30, 110, 220), Color(80, 30, 110, 220), 45);
     g.FillRectangle(&innerLinearBrush, innerbox);
+    
+    CString str;
 
     //Index indicator
-    g.FillEllipse(&SolidBrush(Color(80, 220, 190, 70)), left, top, 34, 34);
-    g.FillEllipse(&SolidBrush(Color(220, 190, 70)), left + 2, top + 2, 30, 30);
+    if (index > -2) {
+        g.FillEllipse(&SolidBrush(Color(80, 220, 190, 70)), left, top, 34, 34);
+        g.FillEllipse(&SolidBrush(Color(220, 190, 70)), left + 2, top + 2, 30, 30);
 
-    //Index Text
-    CString str;
-    str.Format(_T("%d"), index);
-    g.DrawString(str, str.GetLength(), &fntNodeTitle, PointF(left + 17.0 - str.GetLength() * 9, top + 4.0), &SolidBrush(Color(20, 50, 80)));
+        //Index Text
+
+        str.Format(_T("%d"), index);
+        g.DrawString(str, str.GetLength(), &fntNodeTitle, PointF(left + 17.0 - str.GetLength() * 9, top + 4.0), &SolidBrush(Color(20, 50, 80)));
+
+    }
 
     //Content Text
     // 获取可容纳的最长的字符串
-   INT len = 6; PointF p; RectF r;
+    INT len = 6; PointF p; RectF r;
     if (m_strContent.GetLength() <= 7) {
         str = m_strContent;
     }

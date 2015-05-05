@@ -27,6 +27,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
     ON_COMMAND(ID_LIST_CLOSE, &CMainFrame::OnListClose)
     ON_COMMAND(ID_LIST_LINKED, &CMainFrame::OnListLinked)
     ON_UPDATE_COMMAND_UI(ID_LIST_LINKED, &CMainFrame::OnUpdateListLinked)
+    ON_COMMAND(ID_LIST_DOUBLE, &CMainFrame::OnListDouble)
+    ON_UPDATE_COMMAND_UI(ID_LIST_DOUBLE, &CMainFrame::OnUpdateListDouble)
+    ON_COMMAND(ID_LIST_INDEX, &CMainFrame::OnListIndex)
+    ON_UPDATE_COMMAND_UI(ID_LIST_INDEX, &CMainFrame::OnUpdateListIndex)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -242,6 +246,10 @@ BOOL CMainFrame::OnDataStructureChange(int p_iItemToChange) {
             m_wndRibbonBar.ActivateContextCategory(ID_LINK_LIST_CONTEXT);
             if (!m_mdlListModule) {
                 m_mdlListModule = new VisualListModule();
+                // 获取设定项
+                m_mdlListModule->SetIndexed(theApp.GetInt(_T("list index"), TRUE));
+                m_mdlListModule->SetDoubled(theApp.GetInt(_T("list double"), TRUE));
+                m_mdlListModule->SetLinked(theApp.GetInt(_T("list link"), FALSE));
             }
             newModule = m_mdlListModule;
             break;
@@ -348,9 +356,34 @@ void CMainFrame::OnListClose() {
     OnSetDefaultModule();
 }
 
+// 设置是否显示双向链表
+void CMainFrame::OnListDouble() {
+    m_mdlListModule->SetDoubled(!m_mdlListModule->IsDoubled());
+    theApp.WriteInt(_T("list double"), m_mdlListModule->IsDoubled());
+    m_wndRibbonBar.GetParent()->Invalidate();
+}
+
+
+void CMainFrame::OnUpdateListDouble(CCmdUI *pCmdUI) {
+    pCmdUI->SetCheck(m_mdlListModule->IsDoubled());
+}
+
+// 设置是否显示节点序号
+void CMainFrame::OnListIndex() {
+    m_mdlListModule->SetIndexed(!m_mdlListModule->IsIndexed());
+    theApp.WriteInt(_T("list index"), m_mdlListModule->IsIndexed());
+    m_wndRibbonBar.GetParent()->Invalidate();
+}
+
+
+void CMainFrame::OnUpdateListIndex(CCmdUI *pCmdUI) {
+    pCmdUI->SetCheck(m_mdlListModule->IsIndexed());
+}
+
 // 改变链表排列方式
 void CMainFrame::OnListLinked() {
     m_mdlListModule->SetLinked(!m_mdlListModule->IsLinked());
+    theApp.WriteInt(_T("list link"), m_mdlListModule->IsLinked());
     m_wndRibbonBar.GetParent()->Invalidate();
 }
 
@@ -369,6 +402,8 @@ void CMainFrame::OnUpdateListLinked(CCmdUI *pCmdUI) {
 // 堆栈选项卡时间处理
 
 //////////////////////////////////////////////////////////////////////////
+
+
 
 
 

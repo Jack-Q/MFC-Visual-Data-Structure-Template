@@ -147,16 +147,31 @@ void VisualListModule::OnLButtonDblClk(CWnd* pWnd, CPoint point) {
     }
 }
 
+
+
 void VisualListModule::SetLinked(BOOL isLinked) {
-    //if (m_linked = isLinked) {
-    //    return;
-    //}
     m_linked = isLinked;
 }
 
 BOOL VisualListModule::IsLinked() {
     return m_linked;
 }
+
+void VisualListModule::SetDoubled(BOOL isDoubled) {
+    m_doubled = isDoubled;
+}
+
+BOOL VisualListModule::IsDoubled() {
+    return m_doubled;
+}
+void VisualListModule::SetIndexed(BOOL isIndexed) {
+    m_indexed = isIndexed;
+}
+
+BOOL VisualListModule::IsIndexed() {
+    return m_indexed;
+}
+
 
 // 获取当前链表的节点数量
 INT_PTR VisualListModule::GetSize() {
@@ -219,8 +234,6 @@ void VisualListModule::DrawNodes(Graphics & g, CRect &rect) {
     ptCur = GetNodePosition(-1);
     node->draw(g, ptCur.X, ptCur.Y, i, m_fntNodeTitle, m_fntNodeContent);
 
-
-
     // 绘制中间结点
     Point ptFrom, ptTo, ptTmp1, ptTmp2, ptTmp3, ptTmp4;
     GraphicsPath path, arrow;
@@ -242,7 +255,8 @@ void VisualListModule::DrawNodes(Graphics & g, CRect &rect) {
         node->draw(g,
             ptCur.X,
             ptCur.Y,
-            i, m_fntNodeTitle, m_fntNodeContent);
+            IsIndexed() ? i : -2,  // 当不显示标号时，将标号设为-2或更小
+            m_fntNodeTitle, m_fntNodeContent);
 
         // 绘制当前节点指向前一节点的箭头
         ptFrom = node->GetPointFromNext(ptCur);
@@ -302,59 +316,65 @@ void VisualListModule::DrawNodes(Graphics & g, CRect &rect) {
         }
 
         // 绘制前一节点指向当前节点的箭头
-        ptFrom = node->GetPrev()->GetPointToNext(ptPre);
-        ptTo = node->GetPointFromPrev(ptCur);
-        if (ptFrom.X < ptTo.X) {
-            // 两节点在同一行内
-            path.Reset();
-            ptTmp1.X = ptFrom.X;
-            ptTmp1.Y = ptTo.Y + 0.5*DW_PRIMARY_MARGIN;
-            path.AddLine(ptFrom, ptTmp1);
-            ptTmp2.X = ptFrom.X + 0.3 * DW_PRIMARY_MARGIN;
-            ptTmp2.Y = ptTo.Y + 0.8*DW_PRIMARY_MARGIN;
-            ptTmp3.X = ptTmp1.X;
-            ptTmp3.Y = ptTmp2.Y;
-            path.AddBezier(ptTmp1, ptTmp3, ptTmp3, ptTmp2);
-            ptTmp1.X = ptTo.X - 0.3*DW_PRIMARY_MARGIN;
-            ptTmp1.Y = ptTmp2.Y;
-            path.AddLine(ptTmp2, ptTmp1);
-            ptTmp2.X = ptTo.X;
-            ptTmp2.Y = ptTo.Y + 0.5*DW_PRIMARY_MARGIN;
-            ptTmp3.X = ptTmp2.X;
-            ptTmp3.Y = ptTmp1.Y;
-            path.AddBezier(ptTmp1, ptTmp3, ptTmp3, ptTmp2);
-            path.AddLine(ptTmp2, ptTo);
-            g.DrawPath(&penToNext, &path);
-            g.FillPath(&brushToNext, GetDrawArrow(ptTo, TRUE, &arrow));
+        // 仅在双向链表模式下使用
+        if (IsDoubled()) {
+
+            ptFrom = node->GetPrev()->GetPointToNext(ptPre);
+            ptTo = node->GetPointFromPrev(ptCur);
+            if (ptFrom.X < ptTo.X) {
+                // 两节点在同一行内
+                path.Reset();
+                ptTmp1.X = ptFrom.X;
+                ptTmp1.Y = ptTo.Y + 0.5*DW_PRIMARY_MARGIN;
+                path.AddLine(ptFrom, ptTmp1);
+                ptTmp2.X = ptFrom.X + 0.3 * DW_PRIMARY_MARGIN;
+                ptTmp2.Y = ptTo.Y + 0.8*DW_PRIMARY_MARGIN;
+                ptTmp3.X = ptTmp1.X;
+                ptTmp3.Y = ptTmp2.Y;
+                path.AddBezier(ptTmp1, ptTmp3, ptTmp3, ptTmp2);
+                ptTmp1.X = ptTo.X - 0.3*DW_PRIMARY_MARGIN;
+                ptTmp1.Y = ptTmp2.Y;
+                path.AddLine(ptTmp2, ptTmp1);
+                ptTmp2.X = ptTo.X;
+                ptTmp2.Y = ptTo.Y + 0.5*DW_PRIMARY_MARGIN;
+                ptTmp3.X = ptTmp2.X;
+                ptTmp3.Y = ptTmp1.Y;
+                path.AddBezier(ptTmp1, ptTmp3, ptTmp3, ptTmp2);
+                path.AddLine(ptTmp2, ptTo);
+                g.DrawPath(&penToNext, &path);
+                g.FillPath(&brushToNext, GetDrawArrow(ptTo, TRUE, &arrow));
+            }
+            else {
+                path.Reset();
+                ptTmp1.X = ptFrom.X;
+                ptTmp1.Y = ptFrom.Y + 0.7*DW_PRIMARY_MARGIN;
+                path.AddLine(ptFrom, ptTmp1);
+                ptTmp2.X = ptFrom.X - 0.6 * DW_PRIMARY_MARGIN;
+                ptTmp2.Y = ptFrom.Y + 1.3*DW_PRIMARY_MARGIN;
+                ptTmp3.X = ptTmp1.X;
+                ptTmp3.Y = ptTmp2.Y;
+                path.AddBezier(ptTmp1, ptTmp3, ptTmp3, ptTmp2);
+                ptTmp1.X = ptTo.X;
+                ptTmp1.Y = ptTmp2.Y;
+                path.AddLine(ptTmp2, ptTmp1);
+                ptTmp2.X = ptTo.X;
+                ptTmp2.Y = ptTo.Y;
+                ptTmp3.X = ptTmp1.X - 70;
+                ptTmp3.Y = ptTmp1.Y;
+                ptTmp4.X = ptTmp2.X - 20;
+                ptTmp4.Y = ptTmp2.Y + 40;
+                path.AddBezier(ptTmp1, ptTmp3, ptTmp4, ptTmp2);
+                path.AddLine(ptTmp2, ptTo);
+                g.DrawPath(&penToNext, &path);
+                GetDrawArrow(ptTo, TRUE, &arrow);
+                Matrix mat;
+                mat.RotateAt(26.6, PointF(ptTo.X, ptTo.Y));
+                arrow.Transform(&mat);
+                g.FillPath(&brushToNext, &arrow);
+            }
+
         }
-        else {
-            path.Reset();
-            ptTmp1.X = ptFrom.X;
-            ptTmp1.Y = ptFrom.Y + 0.7*DW_PRIMARY_MARGIN;
-            path.AddLine(ptFrom, ptTmp1);
-            ptTmp2.X = ptFrom.X - 0.6 * DW_PRIMARY_MARGIN;
-            ptTmp2.Y = ptFrom.Y + 1.3*DW_PRIMARY_MARGIN;
-            ptTmp3.X = ptTmp1.X;
-            ptTmp3.Y = ptTmp2.Y;
-            path.AddBezier(ptTmp1, ptTmp3, ptTmp3, ptTmp2);
-            ptTmp1.X = ptTo.X;
-            ptTmp1.Y = ptTmp2.Y;
-            path.AddLine(ptTmp2, ptTmp1);
-            ptTmp2.X = ptTo.X;
-            ptTmp2.Y = ptTo.Y;
-            ptTmp3.X = ptTmp1.X - 70;
-            ptTmp3.Y = ptTmp1.Y;
-            ptTmp4.X = ptTmp2.X - 20;
-            ptTmp4.Y = ptTmp2.Y + 40;
-            path.AddBezier(ptTmp1, ptTmp3, ptTmp4, ptTmp2);
-            path.AddLine(ptTmp2, ptTo);
-            g.DrawPath(&penToNext, &path);
-            GetDrawArrow(ptTo, TRUE, &arrow);
-            Matrix mat;
-            mat.RotateAt(26.6, PointF(ptTo.X, ptTo.Y));
-            arrow.Transform(&mat);
-            g.FillPath(&brushToNext, &arrow);
-        }
+
 
     } while (node->HasNext());
 }

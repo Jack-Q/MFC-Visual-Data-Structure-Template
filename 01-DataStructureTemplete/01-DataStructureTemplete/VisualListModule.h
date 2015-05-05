@@ -17,9 +17,15 @@ public:
     // 设置选项接口
     void SetLinked(BOOL isLinked);
     BOOL IsLinked();
+    void SetDoubled(BOOL isDoubled);
+    BOOL IsDoubled();
+    void SetIndexed(BOOL isIndexed);
+    BOOL IsIndexed();
 private:
     // 设置选项
     BOOL m_linked = TRUE;
+    BOOL m_doubled = TRUE;
+    BOOL m_indexed = TRUE;
 
     // 储存数据成员
     VisualListHeadNode m_listHead;

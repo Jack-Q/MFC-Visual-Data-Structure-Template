@@ -458,13 +458,14 @@ END
 STRINGTABLE
 BEGIN
     ID_LIST_DELETE_ALL      "删除链表中的所有节点"
-    ID_LIST_EDIT            "编辑链表数据"
 END
 
 STRINGTABLE
 BEGIN
     ID_LIST_NODE_DELETE     "删除当前节点"
     ID_LIST_NODE_EDITVALUE  "编辑当前节点内容"
+    ID_LIST_EDIT            "编辑链表数据"
+    ID_LIST_INDEX           "显示结点标号"
 END
 
 #endif    // 中文(简体，中国) resources
