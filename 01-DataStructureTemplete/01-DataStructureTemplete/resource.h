@@ -81,14 +81,17 @@
 #define ID_LIST_NODE_EDITVALUE          32806
 #define ID_LIST_DOUBLE                  32809
 #define ID_LIST_LINKED                  32811
+#define ID_CHECK2                       32812
+#define ID_LIST_STZRT_ZERO              32812
 #define ID_LIST_EDIT                    32813
 #define ID_LIST_INDEX                   32815
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        322
-#define _APS_NEXT_COMMAND_VALUE         32812
+#define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1005
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

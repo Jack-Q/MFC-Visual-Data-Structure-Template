@@ -31,6 +31,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
     ON_UPDATE_COMMAND_UI(ID_LIST_DOUBLE, &CMainFrame::OnUpdateListDouble)
     ON_COMMAND(ID_LIST_INDEX, &CMainFrame::OnListIndex)
     ON_UPDATE_COMMAND_UI(ID_LIST_INDEX, &CMainFrame::OnUpdateListIndex)
+    ON_COMMAND(ID_LIST_STZRT_ZERO, &CMainFrame::OnListStzrtZero)
+    ON_UPDATE_COMMAND_UI(ID_LIST_STZRT_ZERO, &CMainFrame::OnUpdateListStzrtZero)
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -246,10 +248,7 @@ BOOL CMainFrame::OnDataStructureChange(int p_iItemToChange) {
             m_wndRibbonBar.ActivateContextCategory(ID_LINK_LIST_CONTEXT);
             if (!m_mdlListModule) {
                 m_mdlListModule = new VisualListModule();
-                // 获取设定项
-                m_mdlListModule->SetIndexed(theApp.GetInt(_T("list index"), TRUE));
-                m_mdlListModule->SetDoubled(theApp.GetInt(_T("list double"), TRUE));
-                m_mdlListModule->SetLinked(theApp.GetInt(_T("list link"), FALSE));
+                
             }
             newModule = m_mdlListModule;
             break;
@@ -380,6 +379,17 @@ void CMainFrame::OnUpdateListIndex(CCmdUI *pCmdUI) {
     pCmdUI->SetCheck(m_mdlListModule->IsIndexed());
 }
 
+// 设置是否从零开始标号
+void CMainFrame::OnListStzrtZero() {
+    m_mdlListModule->SetStartFromZero(!m_mdlListModule->IsStartFromZero());
+    theApp.WriteInt(_T("list start from zero"), m_mdlListModule->IsStartFromZero());
+    m_wndRibbonBar.GetParent()->Invalidate();
+}
+
+void CMainFrame::OnUpdateListStzrtZero(CCmdUI *pCmdUI) {
+    pCmdUI->SetCheck(m_mdlListModule->IsStartFromZero());
+}
+
 // 改变链表排列方式
 void CMainFrame::OnListLinked() {
     m_mdlListModule->SetLinked(!m_mdlListModule->IsLinked());
@@ -390,6 +400,12 @@ void CMainFrame::OnListLinked() {
 void CMainFrame::OnUpdateListLinked(CCmdUI *pCmdUI) {
     pCmdUI->SetCheck(m_mdlListModule->IsLinked());
 }
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -402,7 +418,6 @@ void CMainFrame::OnUpdateListLinked(CCmdUI *pCmdUI) {
 // 堆栈选项卡时间处理
 
 //////////////////////////////////////////////////////////////////////////
-
 
 
 

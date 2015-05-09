@@ -15,12 +15,18 @@ VisualListModule::VisualListModule()
     m_listSize = 0;
     m_listHead.SetNext(&m_listTail);
     m_listTail.SetPrev(&m_listHead);
+    // 获取设定项, 并设定初始值
+    SetIndexed(theApp.GetInt(_T("list index"), TRUE));
+    SetDoubled(theApp.GetInt(_T("list double"), TRUE));
+    SetLinked(theApp.GetInt(_T("list link"), FALSE));
+    SetStartFromZero(theApp.GetInt(_T("list start from zero"), TRUE));
 }
 
 
 VisualListModule::~VisualListModule() {
 
 }
+
 
 INT_PTR VisualListModule::InsertNode(INT_PTR position, CString content) {
     VisualListNodeBase *prev, *next, *cur;
@@ -173,6 +179,14 @@ BOOL VisualListModule::IsIndexed() {
 }
 
 
+void VisualListModule::SetStartFromZero(BOOL isStartFromZero) {
+    m_startFromZero = isStartFromZero;
+}
+
+BOOL VisualListModule::IsStartFromZero() {
+    return m_startFromZero;
+}
+
 // 获取当前链表的节点数量
 INT_PTR VisualListModule::GetSize() {
     return m_listSize;
@@ -255,7 +269,7 @@ void VisualListModule::DrawNodes(Graphics & g, CRect &rect) {
         node->draw(g,
             ptCur.X,
             ptCur.Y,
-            IsIndexed() ? i : -2,  // 当不显示标号时，将标号设为-2或更小
+            IsIndexed() ? (IsStartFromZero() ? i : i + 1) : -2,  // 当不显示标号时，将标号设为-2或更小
             m_fntNodeTitle, m_fntNodeContent);
 
         // 绘制当前节点指向前一节点的箭头

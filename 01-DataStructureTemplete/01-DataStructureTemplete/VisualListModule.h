@@ -21,11 +21,15 @@ public:
     BOOL IsDoubled();
     void SetIndexed(BOOL isIndexed);
     BOOL IsIndexed();
+    void SetStartFromZero(BOOL isStartFromZero);
+    BOOL IsStartFromZero();
+    
 private:
     // 设置选项
     BOOL m_linked = TRUE;
     BOOL m_doubled = TRUE;
     BOOL m_indexed = TRUE;
+    BOOL m_startFromZero = TRUE;
 
     // 储存数据成员
     VisualListHeadNode m_listHead;

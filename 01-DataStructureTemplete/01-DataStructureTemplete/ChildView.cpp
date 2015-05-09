@@ -73,6 +73,7 @@ void CChildView::OnPaint() {
     GetClientRect(&rect);
     //传递绘图接口和视窗大小至当前的模块进行界面UI的绘制
     m_mainFrame->m_selectedModule->Draw(g,rect);
+
 }
 
 

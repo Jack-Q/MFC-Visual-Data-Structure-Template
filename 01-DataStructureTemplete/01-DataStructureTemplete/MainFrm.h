@@ -79,6 +79,8 @@ public:
     afx_msg void OnUpdateListDouble(CCmdUI *pCmdUI);
     afx_msg void OnListIndex();
     afx_msg void OnUpdateListIndex(CCmdUI *pCmdUI);
+    afx_msg void OnListStzrtZero();
+    afx_msg void OnUpdateListStzrtZero(CCmdUI *pCmdUI);
 };
 
 
